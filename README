@@ -1,0 +1,22 @@
+Confusion?
+
+Instructor course relation - 
+ - Which entity should have the @JoinColumn and which should have the mappedBy attribute?
+ - Answer - Since one course can be taught by one instructor here, course entity can have joincolumn instructor_id.
+ 
+ 
+ 
+ Course and review - 
+ - not very intuitive to me.
+ @JoinColumn(name="course_id") defined against List<Review> in Course entity. But course_id column created in review table. 
+ 
+ Unidirectional - Using Course, can get reviews, but not vice versa, that's why course_id joincolumn defined in Course entity. Else, could have defined in Review entity and added getter/setters there.   
+ 
+ 
+ Learning
+ @JoinColumn can be specified to either side of the relationship - OneToMany or ManyToOne - Course/Review.
+ - If specified in Course end, typically for unidirectional case, we don't need to specify anything in review end.
+ - if specified in Review end, Course end can have mappedBy (seems optional though).
+ 
+ - <property name="hbm2ddl.auto">create</property> is needed in hibernate.cfg.xml to auto generate schema. 
+ - This however flushes all the changes done in last session and begins with an empty db.
