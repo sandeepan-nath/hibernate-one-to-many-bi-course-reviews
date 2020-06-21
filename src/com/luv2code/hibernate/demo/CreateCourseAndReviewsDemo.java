@@ -8,6 +8,7 @@ import com.luv2code.hibernate.demo.entity.Course;
 import com.luv2code.hibernate.demo.entity.Instructor;
 import com.luv2code.hibernate.demo.entity.InstructorDetail;
 import com.luv2code.hibernate.demo.entity.Review;
+import com.luv2code.hibernate.demo.entity.Student;
 
 public class CreateCourseAndReviewsDemo {
 
@@ -20,6 +21,8 @@ public class CreateCourseAndReviewsDemo {
 								.addAnnotatedClass(InstructorDetail.class)
 								.addAnnotatedClass(Course.class)
 								.addAnnotatedClass(Review.class)
+								.addAnnotatedClass(Student.class)
+								
 								.buildSessionFactory();
 		
 		// create session
@@ -34,25 +37,33 @@ public class CreateCourseAndReviewsDemo {
 			// create a course
 			/*
 			Course tempCourse = new Course("Pacman - How To Score One Million Points");
+			Student tempStudent = new Student("Sandeepan", "Nath","sandeepan@luv2code.com");
 			
-			// add some reviews
-			tempCourse.addReview(new Review("Great course ... loved its!"));
-			tempCourse.addReview(new Review("Cool course, job well done"));
-			tempCourse.addReview(new Review("What a dumb course, you are an idiot!"));
-						
-			// save the course ... and leverage the cascade all :-)
-			System.out.println("Saving the course");
-			System.out.println(tempCourse);
-			System.out.println(tempCourse.getReviews());
+			tempCourse.addStudent(tempStudent);
 			
 			session.save(tempCourse);
+			
+			session.save(tempStudent);
 			*/
 			
+			int studentId = 3;
+			Student student = session.get(Student.class, studentId);
+			
+			System.out.println("Courses of student "+student.getCourses());
+			
+			
+			System.out.println("removing course "+student.getCourses().get(0)+" from student "+studentId);
+			
+			//student.removeCourse(student.getCourses().get(0));
+			session.delete(student.getCourses().get(0));
+			
+			/*
 			int reviewId = 1;
 			
 			Review review = session.get(Review.class, reviewId);
 			System.out.println("course of review "+review.getCourse());
 			
+			*/
 			
 			// commit transaction
 			session.getTransaction().commit();
